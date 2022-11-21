@@ -40,7 +40,7 @@
     }
     button{
         width: 5.04vw;
-        height: 2.87vw;
+        height: 2vw;
         font-style: normal;
         font-weight: 500;
         font-size: 11px;
@@ -95,9 +95,11 @@
         padding: 0px;
         border:0px;
         border-right: 1px solid #E5E5E5;
+        font-size: 1.04vw;
     }
     th:first-child{
         background-color: #833AE0;
+        color:white;
         border-top-left-radius: 2px;
         border-bottom-left-radius: 2px;
     }
@@ -127,5 +129,8 @@
     }
     input::-webkit-inner-spin-button {
         display: none;
+    }
+    .ammount_p{
+        margin-left: 14px;
     }
 }
