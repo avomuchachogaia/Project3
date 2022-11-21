@@ -1,0 +1,96 @@
+@media only screen and (min-width: 1150px){
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+    body{
+        margin: auto;
+        width: 100%;
+        font-family: 'Roboto',sans-serif;
+    }
+    img{
+        width: 89px;
+    }
+    header{
+        padding-left: 100px;
+        padding-right: 100px;
+        width: auto;
+        height: 50px;
+        background-color: #E5E5E5;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    ul{
+        margin-left: 64px;
+        margin-right:109px ;
+        width:1000px;
+        list-style-type: none;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        font-weight: 600;
+        font-size: 11px;
+        line-height: 13px;
+        letter-spacing: 0.06em;
+        align-items: center;
+    }
+    li{
+        color: #959BA4;
+    }
+    li:hover{
+        color: black;
+    }
+    button{
+        width: 58px;
+        height: 33px;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 11px;
+        line-height: 13px;
+    }
+    h1{
+        width: 587px;
+        height: 32px;
+        margin-top: 52px;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 36px;
+        line-height: 42px;
+    }
+    article{
+        width: 641px;
+        height: 246px;
+        margin-left: 253px;
+    }
+    .main{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    p{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        color: #9F9F9F;
+    }
+    table{
+        width: 259px;
+        height: 30px;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        color:#C6C6C6;
+        /* border: 1px solid #E5E5E5; */
+        border-collapse: collapse;
+    }
+    th{
+        border-radius: 3px;
+        border: 1px solid #E5E5E5;
+    }
+    th:first-child{
+        background-color: purple;
+    }
+    input{
+        width: 259px;
+        height: 102px;
+        margin-top: 20px;
+    }
+}
