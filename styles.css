@@ -1,4 +1,4 @@
-@media only screen and (min-width: 1150px){
+@media only screen and (min-width: 920px){
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
     body{
         margin: auto;
@@ -106,12 +106,24 @@
         border-top-right-radius: 2px;
         border-bottom-right-radius: 2px;
     }
-    input{
+    .ammount{
         width: 22.52vw;
         height: 8.86vw;
         margin-top: 20px;
         border-radius: 3px;
+        border-style: solid;
+        border-color: #E5E5E5;
+    }
+    input{
+        width: 11.38vw;
+        height: 3.30vw;
+        margin-top: 11px;
+        margin-left: 14px;
+        border: 0;
+        font-family: 'Roboto', sans-serif;
+        font-style: normal;
         font-size: 3.13vw;
+        font-weight: 700;
     }
     input::-webkit-inner-spin-button {
         display: none;
