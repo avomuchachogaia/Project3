@@ -89,7 +89,7 @@
         border-style: none;
     }
     .one{
-        margin-left: -0.5px;
+        margin-left: -0.4px;
     }
     th{
         padding: 0px;
@@ -97,11 +97,19 @@
         border-right: 1px solid #E5E5E5;
         font-size: 1.04vw;
     }
-    th:first-child{
+    .one th:first-child{
         background-color: #833AE0;
         color:white;
         border-top-left-radius: 2px;
         border-bottom-left-radius: 2px;
+    }
+    .two th:first-child{
+        border-top-left-radius: 2px;
+        border-bottom-left-radius: 2px;
+    }
+    .two th:nth-child(2){
+        background-color: #833AE0;
+        color:white;
     }
     th:last-child{
         border-right: 0;

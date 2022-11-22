@@ -1,10 +1,13 @@
-let valute = ['RUB','RUB'];
+let e = 0;
+let valute = ['RUB','USD'];
 let currency = [];
+// parse = (s)=>[...s.replace(/[^0-9]/g,"")].reduce((a,c,i,l)=>a+=c+((l.length-i)%3==1?" ":"")||a,"");
 function changeValute(){
     calculationForCurrency(1,0,valute[0],valute[1]);
     calculationForCurrency(1,1,valute[1],valute[0]);
-    document.querySelectorAll('.ammount_p')[0].innerHTML = `1 ${valute[0]} = ${currency[0]} ${valute[1]}`;
-    document.querySelectorAll('.ammount_p')[1].innerHTML = `1 ${valute[1]} = ${currency[1]} ${valute[0]}`;
+    document.querySelectorAll('.ammount_p').forEach((item,index)=>{
+        item.innerHTML = `1 ${valute[index]} = ${currency[index]} ${valute[index == 0 ? 1 : 0]}`
+    })
 }
 function calculation(sum1,sum2,sum_num1,sum_num2){
     fetch(`https://api.exchangerate.host/latest?base=${sum_num1}&symbols=${sum_num2}`)
@@ -19,6 +22,11 @@ function calculationForCurrency(sum1,i,sum_num1,sum_num2){
     .then(data => {
     currency[i] = sum1 * data.rates[sum_num2];
     })
+}
+function up(e) {
+    if (e.value.indexOf(".") != '-1') {
+      e.value=e.value.substring(0, e.value.indexOf(".") + 5);
+    }
 }
 document.querySelectorAll('.left').forEach((item,index)=>{
     item.addEventListener('click',()=>{
