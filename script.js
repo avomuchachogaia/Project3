@@ -1,33 +1,51 @@
 let e = 0;
 let valute = ['RUB','USD'];
-let currency = [];
-// parse = (s)=>[...s.replace(/[^0-9]/g,"")].reduce((a,c,i,l)=>a+=c+((l.length-i)%3==1?" ":"")||a,"");
-function changeValute(){
-    calculationForCurrency(1,0,valute[0],valute[1]);
-    calculationForCurrency(1,1,valute[1],valute[0]);
-    document.querySelectorAll('.ammount_p').forEach((item,index)=>{
-        item.innerHTML = `1 ${valute[index]} = ${currency[index]} ${valute[index == 0 ? 1 : 0]}`
-    })
-}
 function calculation(sum1,sum2,sum_num1,sum_num2){
     fetch(`https://api.exchangerate.host/latest?base=${sum_num1}&symbols=${sum_num2}`)
     .then(response => response.json())
     .then(data => {
-    return sum2.value = sum1 * data.rates[sum_num2];
+    sum2.value = sum1 * data.rates[sum_num2];
+    return up(sum2);
+    })
+    .catch((err)=>{
+        alert('Connection problem');
     })
 }
-function calculationForCurrency(sum1,i,sum_num1,sum_num2){
-    fetch(`https://api.exchangerate.host/latest?base=${sum_num1}&symbols=${sum_num2}`)
+function changeValute(){
+    for(let i = 0; i<2;i++){
+    if(i==0){
+    fetch(`https://api.exchangerate.host/latest?base=${valute[0]}&symbols=${valute[1]}`)
     .then(response => response.json())
     .then(data => {
-    currency[i] = sum1 * data.rates[sum_num2];
+        document.querySelectorAll('.ammount_p')[0].innerHTML = `1 ${valute[0]} = ${data.rates[valute[1]]} ${valute[1]}`
+    })
+    .catch((err)=>{
+        alert('Connection problem');
     })
 }
+   else{
+    fetch(`https://api.exchangerate.host/latest?base=${valute[1]}&symbols=${valute[0]}`)
+    .then(response => response.json())
+    .then(data => {
+        document.querySelectorAll('.ammount_p')[1].innerHTML = `1 ${valute[1]} = ${data.rates[valute[0]]} ${valute[0]}`
+    })
+    .catch((err)=>{
+        alert('Connection problem');
+    })
+   }
+}
+}
+changeValute();
 function up(e) {
     if (e.value.indexOf(".") != '-1') {
       e.value=e.value.substring(0, e.value.indexOf(".") + 5);
     }
 }
+// function space(e){
+//     let parts = e.toString().split(".");
+//     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");                     
+//     return parts.join(".");
+// }
 document.querySelectorAll('.left').forEach((item,index)=>{
     item.addEventListener('click',()=>{
         item.style.backgroundColor = '#833AE0';
@@ -39,6 +57,7 @@ document.querySelectorAll('.left').forEach((item,index)=>{
         }
     }
     valute[0] = item.innerHTML;
+    changeValute();
     calculation(document.querySelectorAll('input')[1].value,document.querySelectorAll('input')[0],valute[1],valute[0]);
     })
 })
@@ -53,13 +72,9 @@ document.querySelectorAll('.right').forEach((item,index)=>{
             }
         }
     valute[1] = item.innerHTML;
+    changeValute();
     calculation(document.querySelectorAll('input')[0].value,document.querySelectorAll('input')[1],valute[0],valute[1]);
     })
-})
-document.querySelectorAll('th').forEach((item)=>{
-  item.addEventListener('click',()=>{
-    changeValute();
-  })
 })
 document.querySelectorAll('input')[0].addEventListener('input', (event) => {
 calculation(document.querySelectorAll('input')[0].value,document.querySelectorAll('input')[1],valute[0],valute[1]);
@@ -68,5 +83,4 @@ changeValute();
 document.querySelectorAll('input')[1].addEventListener('input', (event) => {
 calculation(document.querySelectorAll('input')[1].value,document.querySelectorAll('input')[0],valute[1],valute[0]);
 changeValute();
-})
-    
+})  
