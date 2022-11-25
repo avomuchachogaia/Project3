@@ -1,20 +1,20 @@
 let e = 0;
-let answer;
 let valute = ['RUB','USD'];
 function space (num){
     let dot = false;
-    for(let i = 0; i<num.length;i++)
+    for(let i = 0; i<num.length;i++){
         if(num[i] == ".") dot = true;
+    }
     if(dot){
         let parts = num.toString().split(".");
         for(let i = 0;i<2;i++)
-            parts[i] = parts[i].replace(/\D/g,'');
+            parts[i] = parts[i].replace(/[^0-9,]/g,'');
         parts [0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
         return parts.join(".");
     }
     else{
         let parts = num.toString();
-        parts = parts.replace(/\D/g,'');
+        parts = parts.replace(/[^0-9,]/g,'');
         parts = parts.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
         return parts;
     }
@@ -25,11 +25,11 @@ function despace(num){
         if(num[i] == ".") dot = true;
     if(dot){
         num = num.split(".")
-        num[0] = num[0].replace(/\D/g,'');
+        num[0] = num[0].replace(/[^0-9,]/g,'');
         return num.join(".")
     }
     else{
-    return num = num.replace(/\D/g,'');
+    return num = num.replace(/[^0-9,]/g,'');
     }
 }
 function calculation(sum1,sum2,sum_num1,sum_num2){
@@ -39,6 +39,7 @@ function calculation(sum1,sum2,sum_num1,sum_num2){
     sum1 = despace(sum1);
     sum2.value = sum1 * data.rates[sum_num2];
     sum2.value = space(sum2.value);
+    up(sum2);
     })
     .catch((err)=>{
         alert('Connection problem');
@@ -62,6 +63,19 @@ function up(e) {
     if (e.value.indexOf(".") != '-1') {
       e.value=e.value.substring(0, e.value.indexOf(".") + 5);
     }
+    e.value = e.value.replace(",",".")
+}
+function dot_zero(e){
+    let dot1 = false;
+    e = e.split("");
+    for(let i = 0; i<e.length;i++){
+    if(e.length == 1 && e[i] == ".") e[i]=""
+    else if(e.length == 2 && e[i-1] == "0" && e[i]!=".") e[i]=""
+    else if(e[i]=="." && dot1 == true) e[i] = ""
+    else if(e[i] == ".") dot1 = true;
+    }
+    e = e.join("");
+    return e;
 }
 document.querySelectorAll('.left').forEach((item,index)=>{
     item.addEventListener('click',()=>{
@@ -76,7 +90,6 @@ document.querySelectorAll('.left').forEach((item,index)=>{
     valute[0] = item.innerHTML;
     changeValute();
     calculation(document.querySelectorAll('input')[1].value,document.querySelectorAll('input')[0],valute[1],valute[0]);
-    console.log(answer);
     })
 })
 document.querySelectorAll('.right').forEach((item,index)=>{
@@ -95,11 +108,12 @@ document.querySelectorAll('.right').forEach((item,index)=>{
     })
 })
 document.querySelectorAll('input')[0].addEventListener('input', (event) => {
+event.target.value = dot_zero(event.target.value);
 calculation(document.querySelectorAll('input')[0].value,document.querySelectorAll('input')[1],valute[0],valute[1]);
 changeValute();
-console.log(answer);
 })
 document.querySelectorAll('input')[1].addEventListener('input', (event) => {
+event.target.value = dot_zero(event.target.value);
 calculation(document.querySelectorAll('input')[1].value,document.querySelectorAll('input')[0],valute[1],valute[0]);
 changeValute();
 })  
