@@ -1,4 +1,5 @@
 let e = 0;
+let p;
 let valute = ['RUB','USD'];
 function space (num){
     let dot = false;
@@ -63,7 +64,7 @@ function up(e) {
     if (e.value.indexOf(".") != '-1') {
       e.value=e.value.substring(0, e.value.indexOf(".") + 5);
     }
-    e.value = e.value.replace(",",".")
+     e.value = e.value.replace(",",".");
 }
 function up1(e) {
     if (e.indexOf(".") != '-1') {
