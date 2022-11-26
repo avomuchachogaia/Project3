@@ -50,7 +50,7 @@ function changeValute(){
     fetch(`https://api.exchangerate.host/latest?base=${valute[i]}&symbols=${valute[i==0?1:0]}`)
     .then(response => response.json())
     .then(data => {
-        document.querySelectorAll('.ammount_p')[i].innerHTML = `1 ${valute[i]} = ${data.rates[valute[i==0?1:0]]} ${valute[i==0?1:0]}`
+        document.querySelectorAll('.ammount_p')[i].innerHTML = `1 ${valute[i]} = ${up1(data.rates[valute[i==0?1:0]].toString())} ${valute[i==0?1:0]}`
     })
     .catch((err)=>{
         alert('Connection problem');
@@ -64,6 +64,12 @@ function up(e) {
       e.value=e.value.substring(0, e.value.indexOf(".") + 5);
     }
     e.value = e.value.replace(",",".")
+}
+function up1(e) {
+    if (e.indexOf(".") != '-1') {
+      e=e.substring(0, e.indexOf(".") + 5);
+    }
+    return e;
 }
 function dot_zero(e){
     let dot1 = false;
