@@ -1,5 +1,4 @@
 let e = 0;
-let p;
 let valute = ['RUB','USD'];
 function space (num){
     let dot = false;
@@ -33,6 +32,31 @@ function despace(num){
     return num = num.replace(/[^0-9,]/g,'');
     }
 }
+function up(e) {
+    e.value = space(e.value);
+    if (e.value.indexOf(".") != '-1') {
+      e.value=e.value.substring(0, e.value.indexOf(".") + 5);
+    }
+     e.value = e.value.replace(",",".");
+}
+function up1(e) {
+    if (e.indexOf(".") != '-1') {
+      e=e.substring(0, e.indexOf(".") + 5);
+    }
+    return e;
+}
+function dot_zero(e){
+    let dot1 = false;
+    e = e.split("");
+    for(let i = 0; i<e.length;i++){
+    if(e.length == 1 && e[i] == ".") e[i]=""
+    else if(e.length == 2 && e[i-1] == "0" && e[i]!=".") {e[i-1]=e[i]; e[i] = ""}
+    else if(e[i]=="." && dot1 == true) e[i] = ""
+    else if(e[i] == ".") dot1 = true;
+    }
+    e = e.join("");
+    return e;
+}
 function calculation(sum1,sum2,sum_num1,sum_num2){
     fetch(`https://api.exchangerate.host/latest?base=${sum_num1}&symbols=${sum_num2}`)
     .then(response => response.json())
@@ -59,31 +83,6 @@ function changeValute(){
 }
 }
 changeValute();
-function up(e) {
-    e.value = space(e.value);
-    if (e.value.indexOf(".") != '-1') {
-      e.value=e.value.substring(0, e.value.indexOf(".") + 5);
-    }
-     e.value = e.value.replace(",",".");
-}
-function up1(e) {
-    if (e.indexOf(".") != '-1') {
-      e=e.substring(0, e.indexOf(".") + 5);
-    }
-    return e;
-}
-function dot_zero(e){
-    let dot1 = false;
-    e = e.split("");
-    for(let i = 0; i<e.length;i++){
-    if(e.length == 1 && e[i] == ".") e[i]=""
-    else if(e.length == 2 && e[i-1] == "0" && e[i]!=".") e[i]=""
-    else if(e[i]=="." && dot1 == true) e[i] = ""
-    else if(e[i] == ".") dot1 = true;
-    }
-    e = e.join("");
-    return e;
-}
 document.querySelectorAll('.left').forEach((item,index)=>{
     item.addEventListener('click',()=>{
         item.style.backgroundColor = '#833AE0';
@@ -114,13 +113,25 @@ document.querySelectorAll('.right').forEach((item,index)=>{
     calculation(document.querySelectorAll('input')[0].value,document.querySelectorAll('input')[1],valute[0],valute[1]);
     })
 })
-document.querySelectorAll('input')[0].addEventListener('input', (event) => {
-event.target.value = dot_zero(event.target.value);
-calculation(document.querySelectorAll('input')[0].value,document.querySelectorAll('input')[1],valute[0],valute[1]);
-changeValute();
+document.querySelectorAll('input').forEach((item,index)=>{
+    item.addEventListener('input', (event) => {
+        event.target.value = dot_zero(event.target.value);
+        calculation(item.value,document.querySelectorAll('input')[index==0?1:0],valute[index],valute[index==0?1:0]);
+        changeValute();
+   })
 })
-document.querySelectorAll('input')[1].addEventListener('input', (event) => {
-event.target.value = dot_zero(event.target.value);
-calculation(document.querySelectorAll('input')[1].value,document.querySelectorAll('input')[0],valute[1],valute[0]);
-changeValute();
-})  
+let bool = true;
+document.querySelector('.burger').addEventListener('click',()=>{
+   let ul_new = document.createElement('ul');
+   if(bool){
+   ul_new.innerHTML = document.querySelector('#ul').innerHTML
+   ul_new.classList.add('burger-div');
+   document.querySelector('header').appendChild(ul_new);
+   bool = false;
+   }
+   else{
+    console.log(bool);
+    document.querySelector('header').removeChild(document.querySelector('.burger-div'));
+    bool = true;
+   }
+})
